@@ -34,7 +34,6 @@ Documentation files for mail.
 %build
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
-# rm -rf ri/NOT_THIS_MODULE_RELATED_DIRS
 rm -f ri/created.rid
 
 %install
@@ -50,7 +49,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc NEWS NOTES README THANKS TODO
-%{ruby_rubylibdir}
+%{ruby_rubylibdir}/rmail.rb
+%{ruby_rubylibdir}/rmail
 
 %files rdoc
 %defattr(644,root,root,755)
