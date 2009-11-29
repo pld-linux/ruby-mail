@@ -2,7 +2,7 @@ Summary:	RubyMail is a lightweight mail library
 Name:		ruby-mail
 Version:	1.0.0
 Release:	0.1
-License:	Ruby License
+License:	BSD-like
 Source0:	http://rubyforge.org/frs/download.php/30221/rmail-%{version}.tgz
 # Source0-md5:	5b104c8519fdf1dcff19368a08d7b300
 Group:		Development/Languages
