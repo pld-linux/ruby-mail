@@ -1,16 +1,22 @@
-Summary:	RubyMail is a lightweight mail library
-Name:		ruby-mail
-Version:	1.0.0
+%define pkgname mail
+Summary:	A Really Ruby Mail Library 
+Name:		ruby-%{pkgname}
+Version:	2.1.3
 Release:	1
 License:	BSD-like
-Source0:	http://rubyforge.org/frs/download.php/30221/rmail-%{version}.tgz
-# Source0-md5:	5b104c8519fdf1dcff19368a08d7b300
+Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
+# Source0-md5:	b9bc3bb5d8ea876b016976f6f1fe5ac4
+Patch0:		%{name}-vendor.patch
 Group:		Development/Languages
-URL:		http://rubyforge.org/projects/rubymail/
+URL:		http://github.com/mikel/mail
 BuildRequires:	rpmbuild(macros) >= 1.484
 BuildRequires:	ruby >= 1:1.8.6
 BuildRequires:	ruby-modules
 %{?ruby_mod_ver_requires_eq}
+Requires:	ruby-activesupport
+Requires:	ruby-mime-types
+Requires:	ruby-net-smtp
+Requires:	ruby-treetop
 #BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -18,27 +24,50 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_enable_debug_packages	0
 
 %description
-RubyMail is a lightweight mail library.
+A Really Ruby Mail Library.
 
 %package rdoc
-Summary:	Documentation files for mail
+Summary:	HTML documentation for %{pkgname}
+Summary(pl.UTF-8):	Dokumentacja w formacie HTML dla %{pkgname}
 Group:		Documentation
 Requires:	ruby >= 1:1.8.7-4
 
 %description rdoc
-Documentation files for mail.
+HTML documentation for %{pkgname}.
+
+%description rdoc -l pl.UTF-8
+Dokumentacja w formacie HTML dla %{pkgname}.
+
+%package ri
+Summary:	ri documentation for %{pkgname}
+Summary(pl.UTF-8):	Dokumentacja w formacie ri dla %{pkgname}
+Group:		Documentation
+Requires:	ruby
+
+%description ri
+ri documentation for %{pkgname}.
+
+%description ri -l pl.UTF-8
+Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
-%setup -q -n rmail-%{version}
+%setup -q -c
+%{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
+find -newer README.rdoc -o -print | xargs touch --reference %{SOURCE0}
+%patch0 -p1
+
+rm -r lib/mail/vendor
 
 %build
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
-rm -f ri/created.rid
+rm ri/created.rid
+rm -r ri/{NilClass,String}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
+
 cp -a lib/* $RPM_BUILD_ROOT%{ruby_rubylibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
@@ -48,11 +77,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS NOTES README THANKS TODO
-%{ruby_rubylibdir}/rmail.rb
-%{ruby_rubylibdir}/rmail
+%doc CHANGELOG.rdoc README.rdoc TODO.rdoc
+%{ruby_rubylibdir}/mail.rb
+%{ruby_rubylibdir}/mail
+%{ruby_rubylibdir}/tasks
 
 %files rdoc
 %defattr(644,root,root,755)
 %{ruby_rdocdir}/%{name}-%{version}
-%{ruby_ridir}/RMail
+
+%files ri
+%defattr(644,root,root,755)
+%{ruby_ridir}/Mail
