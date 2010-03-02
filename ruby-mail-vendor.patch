@@ -1,0 +1,11 @@
+--- ruby-mail-2.1.3/lib/mail.rb~	2010-02-22 02:40:45.000000000 +0100
++++ ruby-mail-2.1.3/lib/mail.rb	2010-03-02 16:44:15.852186570 +0100
+@@ -10,7 +10,7 @@
+   # regardless of having activesupport 3 or 2.3 loaded
+   require 'active_support/core_ext/hash/indifferent_access'
+ 
+-  require 'mail/vendor/treetop'
++  require 'treetop'
+ 
+   require 'uri'
+   require 'net/smtp'
