@@ -2,7 +2,7 @@
 Summary:	A Really Ruby Mail Library 
 Name:		ruby-%{pkgname}
 Version:	2.1.3
-Release:	1
+Release:	2
 License:	BSD-like
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 # Source0-md5:	b9bc3bb5d8ea876b016976f6f1fe5ac4
@@ -15,7 +15,6 @@ BuildRequires:	ruby-modules
 %{?ruby_mod_ver_requires_eq}
 Requires:	ruby-activesupport
 Requires:	ruby-mime-types
-Requires:	ruby-net-smtp
 Requires:	ruby-treetop
 #BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
