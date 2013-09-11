@@ -1,5 +1,5 @@
 %define pkgname mail
-Summary:	A Really Ruby Mail Library 
+Summary:	A Really Ruby Mail Library
 Name:		ruby-%{pkgname}
 Version:	2.1.3
 Release:	3
@@ -9,19 +9,12 @@ Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 Patch0:		%{name}-vendor.patch
 Group:		Development/Languages
 URL:		http://github.com/mikel/mail
-BuildRequires:	rpmbuild(macros) >= 1.484
-BuildRequires:	ruby >= 1:1.8.6
-BuildRequires:	ruby-modules
-%{?ruby_mod_ver_requires_eq}
-Requires:	ruby-activesupport
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.665
+Requires:	ruby-activesupport >= 2.3.4
 Requires:	ruby-mime-types
-Requires:	ruby-rake
-Requires:	ruby-treetop
-#BuildArch:	noarch
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# nothing to be placed there. we're not noarch only because of ruby packaging
-%define		_enable_debug_packages	0
 
 %description
 A Really Ruby Mail Library.
@@ -51,9 +44,7 @@ ri documentation for %{pkgname}.
 Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
-%setup -q -c
-%{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
-find -newer README.rdoc -o -print | xargs touch --reference %{SOURCE0}
+%setup -q -n %{pkgname}-%{version}
 %patch0 -p1
 
 rm -r lib/mail/vendor
@@ -62,13 +53,12 @@ rm -r lib/mail/vendor
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
 rm ri/created.rid
-rm -r ri/{NilClass,String}
+rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
-
-cp -a lib/* $RPM_BUILD_ROOT%{ruby_rubylibdir}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_ridir},%{ruby_rdocdir}}
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
@@ -78,9 +68,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.rdoc README.rdoc TODO.rdoc
-%{ruby_rubylibdir}/mail.rb
-%{ruby_rubylibdir}/mail
-%{ruby_rubylibdir}/tasks/*
+%{ruby_vendorlibdir}/mail.rb
+%{ruby_vendorlibdir}/mail
+%{ruby_vendorlibdir}/tasks/*
 
 %files rdoc
 %defattr(644,root,root,755)
