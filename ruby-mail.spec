@@ -13,6 +13,7 @@ BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 Requires:	ruby-activesupport >= 2.3.4
 Requires:	ruby-mime-types
+Requires:	ruby-treetop
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
