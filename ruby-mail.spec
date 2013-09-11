@@ -11,6 +11,9 @@ Group:		Development/Languages
 URL:		http://github.com/mikel/mail
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
+%if %(locale -a | grep -q '^en_US$'; echo $?)
+BuildRequires:	glibc-localedb-all
+%endif
 Requires:	ruby-activesupport >= 2.3.4
 Requires:	ruby-mime-types
 Requires:	ruby-treetop
@@ -51,6 +54,8 @@ Dokumentacji w formacie ri dla %{pkgname}.
 rm -r lib/mail/vendor
 
 %build
+# UTF8 locale needed for doc generation
+export LC_ALL=en_US.UTF-8
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
 rm ri/created.rid
