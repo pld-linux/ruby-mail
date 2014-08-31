@@ -1,12 +1,11 @@
 %define pkgname mail
 Summary:	A Really Ruby Mail Library
 Name:		ruby-%{pkgname}
-Version:	2.1.3
-Release:	5
+Version:	2.5.4
+Release:	1
 License:	BSD-like
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	b9bc3bb5d8ea876b016976f6f1fe5ac4
-Patch0:		%{name}-vendor.patch
+# Source0-md5:	209b00419b063d4cbfeeab01c2cfaf62
 Group:		Development/Languages
 URL:		http://github.com/mikel/mail
 BuildRequires:	rpm-rubyprov
@@ -49,11 +48,11 @@ Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
 %setup -q -n %{pkgname}-%{version}
-%patch0 -p1
-
-rm -r lib/mail/vendor
 
 %build
+# write .gemspec
+%__gem_helper spec
+
 # UTF8 locale needed for doc generation
 export LC_ALL=en_US.UTF-8
 rdoc --ri --op ri lib
@@ -68,15 +67,21 @@ cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
+# install gemspec
+install -d $RPM_BUILD_ROOT%{ruby_specdir}
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG.rdoc README.rdoc TODO.rdoc
-%{ruby_vendorlibdir}/mail.rb
+%doc CHANGELOG.rdoc README.md TODO.rdoc
 %{ruby_vendorlibdir}/mail
+%{ruby_vendorlibdir}/mail.rb
+%{ruby_vendorlibdir}/load_parsers.rb
 %{ruby_vendorlibdir}/tasks/*
+%{ruby_specdir}/%{pkgname}-%{version}.gemspec
 
 %files rdoc
 %defattr(644,root,root,755)
