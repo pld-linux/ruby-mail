@@ -2,7 +2,7 @@
 Summary:	A Really Ruby Mail Library
 Name:		ruby-%{pkgname}
 Version:	2.5.4
-Release:	2
+Release:	3
 License:	BSD-like
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 # Source0-md5:	209b00419b063d4cbfeeab01c2cfaf62
