@@ -1,11 +1,11 @@
 %define pkgname mail
 Summary:	A Really Ruby Mail Library
 Name:		ruby-%{pkgname}
-Version:	2.5.4
-Release:	4
+Version:	2.6.4
+Release:	1
 License:	BSD-like
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	209b00419b063d4cbfeeab01c2cfaf62
+# Source0-md5:	3e43923308949f33f7281e88c92dc101
 Group:		Development/Languages
 URL:		http://github.com/mikel/mail
 BuildRequires:	rpm-rubyprov
@@ -79,8 +79,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc CHANGELOG.rdoc README.md TODO.rdoc
 %{ruby_vendorlibdir}/mail
 %{ruby_vendorlibdir}/mail.rb
-%{ruby_vendorlibdir}/load_parsers.rb
-%{ruby_vendorlibdir}/tasks/*
 %{ruby_specdir}/%{pkgname}-%{version}.gemspec
 
 %files rdoc
