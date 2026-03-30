@@ -2,7 +2,7 @@
 Summary:	A Really Ruby Mail Library
 Name:		ruby-%{pkgname}
 Version:	2.9.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages
 Source0:	https://rubygems.org/downloads/%{pkgname}-%{version}.gem
